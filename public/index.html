@@ -53,126 +53,135 @@
         </header>
 
         <div class="flex flex-col py-5 flex-1 gap-4 px-40">
-          <div class="flex flex-col w-full">
-            <div class="flex flex-col">
-              <div
-                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
-              >
-                <label class="flex flex-col min-w-40 flex-1">
-                  <div class="flex flex-row px-4 py-3 gap-4 items-center">
+          <div id="main" class="flex flex-row gap-4">
+            <div id="main-section" class="flex flex-col w-1/2">
+              <div class="flex flex-col">
+                <div
+                  class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+                >
+                  <label class="flex flex-col min-w-40 flex-1">
+                    <div class="flex flex-row py-3 gap-4 items-center">
+                      <input
+                        type="radio"
+                        name="pay-type"
+                        value="hourly"
+                        checked
+                      />
+                      Hourly rate
+  
+                      <input
+                        type="radio"
+                        name="pay-type"
+                        value="annual"
+                        class="ml-4"
+                      />
+                      Annual gross pay
+                    </div>
+  
                     <input
-                      type="radio"
-                      name="pay-type"
-                      value="hourly"
-                      checked
+                      id="payInput"
+                      placeholder="Enter amount"
+                      type="number"
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
+                      value=""
                     />
-                    Hourly rate
-
+                    <p id="" class="error-message hidden mt-4 text-red-500">
+                      Invalid input
+                    </p>
+                  </label>
+                </div>
+              </div>
+              <div id="hourlyInputs" class="flex flex-col gap-4">
+                <div
+                  class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+                >
+                  <label class="flex flex-col min-w-40 flex-1">
+                    <p
+                      class="text-[#111418] text-base font-medium leading-normal pb-2"
+                    >
+                      Hours worked
+                    </p>
                     <input
-                      type="radio"
-                      name="pay-type"
-                      value="annual"
-                      class="ml-4"
+                      id="hoursWorked"
+                      placeholder="Enter hours"
+                      type="number"
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
+                      value=""
                     />
-                    Annual gross pay
-                  </div>
-
-                  <input
-                    id="payInput"
-                    placeholder="Enter amount"
-                    type="number"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
-                    value=""
-                  />
-                  <p id="" class="error-message hidden mt-4 text-red-500">
-                    Invalid input
-                  </p>
-                </label>
+                    <p id="" class="error-message hidden mt-4 text-red-500">
+                      Invalid input
+                    </p>
+                  </label>
+                </div>
+                <div
+                  class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+                >
+                  <label class="flex flex-col min-w-40 flex-1">
+                    <p
+                      class="text-[#111418] text-base font-medium leading-normal pb-2"
+                    >
+                      Overtime hours worked
+                    </p>
+                    <input
+                      id="overtimeHours"
+                      placeholder="Enter overtime hours"
+                      type="number"
+                      class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
+                      value=""
+                    />
+                    <p id="" class="error-message hidden mt-4 text-red-500">
+                      Invalid input
+                    </p>
+                  </label>
+                </div>
+                <div
+                  class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+                >
+                  <label class="flex flex-col min-w-40 flex-1">
+                    <p
+                      class="text-[#111418] text-base font-medium leading-normal pb-2"
+                    >
+                      Overtime rate
+                    </p>
+                    <select
+                      id="overtimeRate"
+                      class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
+                    >
+                      <option value="1.5">Time and a half</option>
+                      <option value="2">Double time</option>
+                    </select>
+                  </label>
+                </div>
               </div>
-            </div>
-            <div id="hourlyInputs" class="flex flex-col gap-4">
               <div
+                id="annualInputs"
                 class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
+                style="display: none"
               >
                 <label class="flex flex-col min-w-40 flex-1">
                   <p
                     class="text-[#111418] text-base font-medium leading-normal pb-2"
                   >
-                    Hours worked
-                  </p>
-                  <input
-                    id="hoursWorked"
-                    placeholder="Enter hours"
-                    type="number"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
-                    value=""
-                  />
-                  <p id="" class="error-message hidden mt-4 text-red-500">
-                    Invalid input
-                  </p>
-                </label>
-              </div>
-              <div
-                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
-              >
-                <label class="flex flex-col min-w-40 flex-1">
-                  <p
-                    class="text-[#111418] text-base font-medium leading-normal pb-2"
-                  >
-                    Overtime hours worked
-                  </p>
-                  <input
-                    id="overtimeHours"
-                    placeholder="Enter overtime hours"
-                    type="number"
-                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
-                    value=""
-                  />
-                  <p id="" class="error-message hidden mt-4 text-red-500">
-                    Invalid input
-                  </p>
-                </label>
-              </div>
-              <div
-                class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
-              >
-                <label class="flex flex-col min-w-40 flex-1">
-                  <p
-                    class="text-[#111418] text-base font-medium leading-normal pb-2"
-                  >
-                    Overtime rate
+                    Pay frequency
                   </p>
                   <select
-                    id="overtimeRate"
+                    id="payFrequency"
                     class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
                   >
-                    <option value="1.5">Time and a half</option>
-                    <option value="2">Double time</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly">Bi-weekly</option>
                   </select>
                 </label>
               </div>
             </div>
-            <div
-              id="annualInputs"
-              class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3"
-              style="display: none"
-            >
-              <label class="flex flex-col min-w-40 flex-1">
-                <p
-                  class="text-[#111418] text-base font-medium leading-normal pb-2"
-                >
-                  Pay frequency
-                </p>
-                <select
-                  id="payFrequency"
-                  class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-[#111418] focus:outline-0 focus:ring-0 border border-[#dce0e5] bg-white focus:border-[#dce0e5] h-14 placeholder:text-[#637588] p-[15px] text-base font-normal leading-normal"
-                >
-                  <option value="weekly">Weekly</option>
-                  <option value="biweekly">Bi-weekly</option>
-                </select>
-              </label>
+
+            <div id="gif-section" class="flex items-center">
+              <iframe src="https://giphy.com/embed/yFRBsePwF4BGg" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe>
             </div>
+
           </div>
+          
+          
 
           <div class="flex px-4 py-3 justify-end">
             <button
@@ -183,7 +192,7 @@
             </button>
           </div>
 
-          <div class="p-4 flex flex-col flex-1">
+          <div id="results" class="p-4 flex flex-col flex-1">
             <h3
               class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] pb-2 pt-4"
             >

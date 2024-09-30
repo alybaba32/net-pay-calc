@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const calculateBtn = document.getElementById('calculateBtn');
     const hourlyInputs = document.getElementById('hourlyInputs');
     const annualInputs = document.getElementById('annualInputs');
+    const resultsSection = document.getElementById("results");
 
     // Results elements
     const grossPayElement = document.getElementById('grossPay');
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add input validation listeners
     payInput.addEventListener('input', validatePositiveNumber);
     hoursWorked.addEventListener('input', validatePositiveNumber);
-    overtimeHours.addEventListener('input', validatePositiveNumber);
+    overtimeHours.addEventListener('input', validateOvertimeInput);
 
     // Functions
     function toggleInputs() {
@@ -57,13 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const input = event.target;
         const value = input.value;
         
-        targetParent = event.target.parentElement;
-        error_message_p = targetParent.querySelector(".error-message");
+        const targetParent = input.parentElement;
+        const error_message_p = targetParent.querySelector(".error-message");
         
-        // no errors raised if overtime hours worked is 0
-        if (event.target.id == "overtimeHours") {
-            
-        }
 
         if (value === '' || isNaN(value) || parseFloat(value) <= 0) {
             input.style.borderColor = 'red';
@@ -76,8 +73,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function validateOvertimeInput(event) {
+        const input = event.target;
+        const value = input.value;
+        
+        const targetParent = input.parentElement;
+        const error_message_p = targetParent.querySelector(".error-message");
+
+        if (isNaN(value) || parseFloat(value) < 0) {
+            input.style.borderColor = 'red';
+            error_message_p.classList.remove("hidden");
+        } else {
+            input.style.borderColor = '';
+            error_message_p.classList.add("hidden");
+        }
+    }
+
     function isInputValid() {
-        const inputs = [payInput, hoursWorked, overtimeHours];
+        const inputs = [payInput, hoursWorked];
+        
+        if (overtimeHours.style.borderColor == "red") {
+            return false;
+        }
+
         return inputs.every(input => input.style.borderColor !== 'red' && input.value !== '');
     }
 
@@ -132,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error in calculation:', error);
             alert('An error occurred during calculation. Please check your inputs and try again.');
         }
+        resultsSection.scrollIntoView({behavior: "smooth"});
     }
 
     function formatCurrency(amount) {
