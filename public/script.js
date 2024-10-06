@@ -42,13 +42,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Functions
     function toggleInputs() {
         const payType = document.querySelector('input[name="pay-type"]:checked').value;
+
+        payInput.value = "";
+        const gif = document.getElementById("gif");
        
         if (payType === 'hourly') {
             hourlyInputs.style.display = 'flex';
             payInput.placeholder = 'Enter hourly rate';
+            gif.style.scale = 1.0;
         } else {
             hourlyInputs.style.display = 'none';
             payInput.placeholder = 'Enter annual gross pay';
+            
+            gif.setAttribute("style", "align-items: end; scale: 0.8;");
         }
     }
 
@@ -114,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const overtimeHoursWorked = parseFloat(overtimeHours.value) || 0;
                 const overtimeMultiplier = parseFloat(overtimeRate.value);
                 
-
                 
                 if (frequency === 'Weekly') {
                     grossPay = (hourlyRate * regularHours) + (hourlyRate * overtimeHoursWorked * overtimeMultiplier);
