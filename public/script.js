@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const hourlyInputs = document.getElementById('hourlyInputs');
     const netPayFrequency = document.getElementById('netPayFrequency');
     const resultsSection = document.getElementById("results");
+    let payType = document.querySelector('input[name="pay-type"]:checked').value;
+    
 
     // Results elements
     const grossPayElement = document.getElementById('grossPay');
@@ -41,21 +43,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Functions
     function toggleInputs() {
-        const payType = document.querySelector('input[name="pay-type"]:checked').value;
-
+        payType = document.querySelector('input[name="pay-type"]:checked').value;
+        
         payInput.value = "";
         const gif = document.getElementById("gif");
        
         if (payType === 'hourly') {
             hourlyInputs.style.display = 'flex';
             payInput.placeholder = 'Enter hourly rate';
+
             gif.style.scale = 1.0;
         } else {
             hourlyInputs.style.display = 'none';
             payInput.placeholder = 'Enter annual gross pay';
             
             gif.setAttribute("style", "align-items: end; scale: 0.8;");
-        }
+        }  
     }
 
     function validatePositiveNumber(event) {
@@ -95,12 +98,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function isInputValid() {
         const inputs = [payInput, hoursWorked];
-        
-        if (overtimeHours.style.borderColor == "red") {
-            return false;
-        }
 
-        return inputs.every(input => input.style.borderColor !== 'red' && input.value !== '');
+        if (payType === "annual") {
+            return payInput.value !== ""? true: false;
+        }
+        else {
+            if (overtimeHours.style.borderColor == "red") {
+                return false;
+            }
+    
+            return inputs.every(input => input.style.borderColor !== 'red' && input.value !== '');
+        }
+    
     }
 
     function calculateNetPay() {
@@ -136,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     grossPay = annualPay / 26;
                 }
             }
-
             
 
             
