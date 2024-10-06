@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const payFrequency = document.getElementById('payFrequency');
     const calculateBtn = document.getElementById('calculateBtn');
     const hourlyInputs = document.getElementById('hourlyInputs');
-    const annualInputs = document.getElementById('annualInputs');
+    const netPayFrequency = document.getElementById('netPayFrequency');
     const resultsSection = document.getElementById("results");
 
     // Results elements
@@ -45,11 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
        
         if (payType === 'hourly') {
             hourlyInputs.style.display = 'flex';
-            annualInputs.style.display = 'none';
             payInput.placeholder = 'Enter hourly rate';
         } else {
             hourlyInputs.style.display = 'none';
-            annualInputs.style.display = 'flex';
             payInput.placeholder = 'Enter annual gross pay';
         }
     }
@@ -107,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const payType = document.querySelector('input[name="pay-type"]:checked').value;
         let grossPay = 0;
+        const frequency = payFrequency.value;
 
         try {
             if (payType === 'hourly') {
@@ -114,20 +113,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 const regularHours = parseFloat(hoursWorked.value) || 0;
                 const overtimeHoursWorked = parseFloat(overtimeHours.value) || 0;
                 const overtimeMultiplier = parseFloat(overtimeRate.value);
+                
 
-                grossPay = (hourlyRate * regularHours) + (hourlyRate * overtimeHoursWorked * overtimeMultiplier);
                 
-            } else {
-                const annualPay = parseFloat(payInput.value) || 0;
-                const frequency = payFrequency.value;
-                
-                if (frequency === 'weekly') {
-                    grossPay = annualPay / 52;
-                } else if (frequency === 'biweekly') {
-                    grossPay = annualPay / 26;
+                if (frequency === 'Weekly') {
+                    grossPay = (hourlyRate * regularHours) + (hourlyRate * overtimeHoursWorked * overtimeMultiplier);
+                } else if (frequency === 'Bi-weekly') {
+                    grossPay = (hourlyRate * (regularHours * 2)) + (hourlyRate * overtimeHoursWorked * overtimeMultiplier);
                 }
                 
+            } else {
+                const annualPay = parseFloat(payInput.value) || 0;  
+
+                if (frequency === 'Weekly') {
+                    grossPay = annualPay / 52;
+                } else if (frequency === 'Bi-weekly') {
+                    grossPay = annualPay / 26;
+                }
             }
+
+            
+
+            
 
             const federalTax = grossPay * FEDERAL_TAX_RATE;
             const stateTax = grossPay * STATE_TAX_RATE;
@@ -145,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
             medicareTaxElement.textContent = formatCurrency(medicareTax);
             stateTaxElement.textContent = formatCurrency(stateTax);
             localTaxElement.textContent = formatCurrency(localTax);
+            netPayFrequency.textContent = frequency + " pay";
             netPayElement.textContent = formatCurrency(netPay);
         } catch (error) {
             console.error('Error in calculation:', error);
